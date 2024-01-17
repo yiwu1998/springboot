@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 
-import cn.hutool.core.lang.UUID;
 import com.example.demo.entity.People;
 import com.example.demo.service.PeopleService;
-import com.example.demo.util.GenUtil;
+import com.example.demo.util.GenerateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +38,16 @@ public class PeopleController {
 
         for(int i = 1; i < 20; i++){
             People people1 = new People();
-            people1.setAge(GenUtil.generateRandomAge(11,66));
-            people1.setName(GenUtil.generateName());
+            people1.setAge(GenerateUtil.generateRandomAge(11,66));
+            people1.setName(GenerateUtil.generateName());
             people.add(people1);
         }
         return peopleService.saveBatch(people);
+    }
+
+    @PostMapping("/admitUpdate")
+    public void admitUpdate() {
+        peopleService.admitUpdate();
     }
 
 }

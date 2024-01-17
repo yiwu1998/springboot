@@ -11,4 +11,6 @@ public interface PeopleService  extends IService<People> {
 
 
     People mapperTest(People people);
+
+    void admitUpdate();
 }

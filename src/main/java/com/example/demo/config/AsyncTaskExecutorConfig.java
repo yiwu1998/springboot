@@ -28,7 +28,7 @@ public class AsyncTaskExecutorConfig {
         executor.setQueueCapacity(autoReplyForPromptPaymentExecutorQueueCapacity);
         executor.setKeepAliveSeconds(autoReplyForPromptPaymentExecutorAliveSeconds);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        executor.setThreadNamePrefix("messageExecutorr-");
+        executor.setThreadNamePrefix("admitExecutorr-");
         executor.setAllowCoreThreadTimeOut(true);
         executor.initialize();
         return executor;
