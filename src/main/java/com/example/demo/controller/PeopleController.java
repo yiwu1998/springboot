@@ -44,7 +44,10 @@ public class PeopleController {
         }
         return peopleService.saveBatch(people);
     }
-
+    /**
+     * 异步更新
+     * @return
+     */
     @PostMapping("/admitUpdate")
     public void admitUpdate() {
         peopleService.admitUpdate();
