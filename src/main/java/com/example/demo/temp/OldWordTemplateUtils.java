@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlObject;
@@ -37,7 +38,7 @@ public class OldWordTemplateUtils {
     public static void main(String[] args) {
         try {
             // 加载 Word 文档模板
-            InputStream templateStream = new FileInputStream("D:\\idea\\test.docx");
+            InputStream templateStream = new FileInputStream("D:\\idea\\fileTest\\test.docx");
             XWPFDocument document = new XWPFDocument(templateStream);
 
 
@@ -53,7 +54,6 @@ public class OldWordTemplateUtils {
             map.put("confirmDate", "confirmDate");
             list.add(map);
 
-            List<Map<String, Object>> list2 = new ArrayList<>();
             Map<String, Object> map2 = new HashMap<>();
             map2.put("index", "index2");
             map2.put("contractNo", "contractNo2");
@@ -65,9 +65,11 @@ public class OldWordTemplateUtils {
 
 
             addTableInDocFooterPos(list, tables.get(0));
-            //addTableInDocFooterPos(list2, tables.get(0));
 
-
+            //插入图片
+            XWPFParagraph paragraph = document.createParagraph();
+            XWPFRun run = paragraph.createRun();
+            insertImageAtPosition(document, 0, "D:\\idea\\fileTest\\22.jpeg");
 
             File localFile = new File("src/main/resources/" + System.currentTimeMillis() + ".doc");
             FileOutputStream fileOutputStream = new FileOutputStream(localFile);
@@ -83,6 +85,27 @@ public class OldWordTemplateUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 在指定位置插入图片
+    private static void insertImageAtPosition(XWPFDocument document, int position, String imagePath) throws IOException, InvalidFormatException {
+        // 创建段落对象
+        XWPFParagraph paragraph = document.createParagraph();
+
+        // 创建运行对象
+        XWPFRun run = paragraph.createRun();
+
+        // 读取图片文件
+        InputStream imageStream = new FileInputStream(imagePath);
+
+        // 插入图片到运行对象
+        run.addPicture(imageStream, Document.PICTURE_TYPE_JPEG, "image.jpg", Units.toEMU(500), Units.toEMU(281)); // 设置图片宽度和高度
+
+        // 关闭图片流
+        imageStream.close();
+
+        // 将段落插入到指定位置
+        document.setParagraph(paragraph, position);
     }
 
 
@@ -137,6 +160,8 @@ public class OldWordTemplateUtils {
             }
             table.addRow(newCreateRow);
         }
+
+
     }
 
 
