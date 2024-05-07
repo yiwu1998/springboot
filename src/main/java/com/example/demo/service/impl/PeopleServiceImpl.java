@@ -6,6 +6,7 @@ import com.example.demo.mapper.PeopleMapper;
 import com.example.demo.service.PeopleService;
 import com.example.demo.util.TimeOperateUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,13 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class PeopleServiceImpl extends ServiceImpl<PeopleMapper,People> implements PeopleService {
+public class PeopleServiceImpl extends ServiceImpl<PeopleMapper, People> implements PeopleService {
 
     @Autowired
     public PeopleMapper peopleMapper;
+
+    @Autowired
+    private SqlSession sqlSession;
 
     LocalTime targetTime = LocalTime.of(11, 14);
 
@@ -38,12 +42,22 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleMapper,People> implemen
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
             log.info("admitUpdate正在执行" + LocalTime.now()); //业务代码执行
-            if (  TimeOperateUtil.currentTimeIsAfter(targetTime)) { //实际业务判断
+            if (TimeOperateUtil.currentTimeIsAfter(targetTime)) { //实际业务判断
                 log.info("线程关闭" + LocalTime.now());
                 executor.shutdown(); // 关闭定时任务
             }
         }, 0, 1, TimeUnit.MINUTES);
         log.info("admitUpdate执行结束" + LocalTime.now());
+    }
+
+    @Override
+    public void delTable(String[] tables) {
+        if(tables.length == 0){
+            return;
+        }
+        for(String table : tables){
+            sqlSession.update("truncate table " + table);
+        }
     }
 
 }

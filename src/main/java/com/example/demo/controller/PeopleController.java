@@ -53,4 +53,12 @@ public class PeopleController {
         peopleService.admitUpdate();
     }
 
+
+    @PostMapping("/delTable")
+    public void delTable() {
+        String[] tables = {"department_tree", "user_menu_warrant"};
+         peopleService.delTable(tables);
+        System.out.println("删除成功");
+    }
+
 }
