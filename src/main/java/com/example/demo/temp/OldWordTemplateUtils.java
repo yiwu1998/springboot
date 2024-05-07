@@ -51,6 +51,7 @@ public class OldWordTemplateUtils {
             map.put("billCode", "billCode");
             map.put("tsAssetNo", "tsAssetNo");
             map.put("confirmDate", "confirmDate");
+            list.add(map);
 
             List<Map<String, Object>> list2 = new ArrayList<>();
             Map<String, Object> map2 = new HashMap<>();
@@ -60,11 +61,11 @@ public class OldWordTemplateUtils {
             map2.put("billCode", "billCode2");
             map2.put("tsAssetNo", "tsAssetNo2");
             map2.put("confirmDate", "confirmDate2");
-            list2.add(map2);
+            list.add(map2);
 
 
             addTableInDocFooterPos(list, tables.get(0));
-            addTableInDocFooterPos(list2, tables.get(0));
+            //addTableInDocFooterPos(list2, tables.get(0));
 
 
 
