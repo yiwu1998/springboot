@@ -1,22 +1,36 @@
 package com.example.demo.temp;
 
+import cn.hutool.json.JSONUtil;
 import com.example.demo.util.JdbcUtil;
 import org.springframework.scheduling.annotation.Async;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Random;
+import java.time.Year;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Async(value = "admitExecutorr")
 public class Temp4 {
     public static void main(String[] args) {
-        String project = getProject("/瀚蓝环境股份有限公司/固废事业群/瀚蓝（厦门）固废处理有限公司/瀚蓝工程技术有限公司/项目指挥部/安溪公司/经营班子");
-        System.out.println(project
-        );
+      List<String> list = new ArrayList<>();
+      list.add("222");
+        list.add("11");
+        list.add("333");
+
+        Map<String, String> paramMap = new HashMap<>();
+        String touser = list.stream()
+                .collect(Collectors.joining("|")); // 使用|连接字符串
+        paramMap.put("touser", touser);
+
+        System.out.println(JSONUtil.toJsonStr(paramMap));
+
+
     }
     public  static String getProject(String input) {
         int firstSlashIndex = input.indexOf("/");

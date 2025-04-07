@@ -27,7 +27,7 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleMapper, People> impleme
     @Autowired
     private SqlSession sqlSession;
 
-    LocalTime targetTime = LocalTime.of(11, 14);
+    LocalTime targetTime = LocalTime.of(17, 51);
 
 
     @Override
@@ -41,13 +41,13 @@ public class PeopleServiceImpl extends ServiceImpl<PeopleMapper, People> impleme
         //自动任务，1分钟调一次准入查询
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
-            log.info("admitUpdate正在执行" + LocalTime.now()); //业务代码执行
+            log.info("admitUpdate正在执行,执行多次" + LocalTime.now()); //业务代码执行
             if (TimeOperateUtil.currentTimeIsAfter(targetTime)) { //实际业务判断
-                log.info("线程关闭" + LocalTime.now());
+                log.info("线程关闭,最后执行" + LocalTime.now());
                 executor.shutdown(); // 关闭定时任务
             }
         }, 0, 1, TimeUnit.MINUTES);
-        log.info("admitUpdate执行结束" + LocalTime.now());
+        log.info("admitUpdate执行结束,第一次执行时，执行一次" + LocalTime.now());
     }
 
     @Override

@@ -5,8 +5,11 @@ import com.example.demo.entity.People;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
+
+/**
+ * 同步数据库操作
+ */
 public class JdbcUtil {
     static String url = "jdbc:mysql://localhost:3306/z_test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8";
     public static final String USERNAME = "root";
